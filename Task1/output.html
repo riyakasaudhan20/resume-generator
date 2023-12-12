@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        ::selection {
+            background-color: rgb(0, 130, 106);
+            color: aliceblue;
+        }
+        body {
+            font-family: Calibri, Helvetica, sans-serif;
+            background-image: url("img3.jpg");
+            background-size: cover;
+            color: black;
+        }
+
+        .container {
+          /*  border-top-right-radius: 40%;*/
+            margin-left: 100px;
+            margin-right: 100px;
+            padding: 50px;
+            background-color: rgba(255, 255, 255, 0.877);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+        }
+
+        hr {
+            border: 2px solid black;
+            margin-bottom: 25px;
+           
+        }
+
+        .preview-data {
+            padding: 10px;
+        }
+        .edu table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid black;
+        }
+        
+        .edu th, .edu td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid black;
+        }
+        
+        .edu th {
+            background-color: rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+        
+        .edu tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .edu tr:nth-child(odd) {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        span{
+            font-size: 1.3rem;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Input Preview</h1>
+        <hr>
+        <center>
+        <div class="preview-data" style="padding: 20px;">
+            <strong style="font-size: 1.4rem;">About me:<br></strong>
+            <span id="previewAbout"></span>
+        </div>
+    </center>
+    <div style="display: flex;gap:250px;">
+        <div class="preview-data">
+            <strong style="font-size: 1.4rem;">First Name:</strong>
+            <span id="previewFirstName"></span>
+        </div>
+        <div class="preview-data">
+            <strong style="font-size: 1.4rem;">Last Name:</strong>
+            <span id="previewLastName"></span>
+        </div>
+    </div>
+    <div style="display: flex;gap:100px;">
+        <div class="preview-data">
+            <strong style="font-size: 1.4rem;">Email:</strong>
+            <span id="previewEmail"></span>
+        </div>
+        <div class="preview-data">
+            <strong style="font-size: 1.4rem;">Date of Birth:</strong>
+            <span id="previewDOB"></span>
+        </div>
+        </div>
+        <div class="preview-data">
+            <strong style="font-size: 1.4rem;">Skills:</strong>
+            <span id="previewSkills"></span>
+        </div>
+        <div class="preview-data">
+            <strong style="font-size: 1.4rem;">Gender:</strong>
+            <span id="previewGender"></span>
+        </div>
+
+        <div class="preview-data address">
+            <strong style="font-size: 1.4rem;">Address:</strong>
+            <span id="previewAddress"></span>
+
+            <!-- 12,Oct 2023 -->
+            <!-- https://www.educative.io/answers/how-to-save-user-input-to-json-object-in-html -->
+            <!-- https://www.toptal.com/software/definitive-guide-to-datetime-manipulation -->
+
+        </div>
+       
+        <div class="preview-data edu">
+            <strong style="font-size: 1.4rem;">Education:</strong>
+    <table id="educationTable">
+        <thead>
+            <tr>
+                <th>School Name</th>
+                <th>Degree</th>
+                <th>Percentage Marks</th>
+                <th>Passout Year</th>
+            </tr>
+        </thead>
+        <tbody id="educationData"></tbody>
+    </table>
+        </div>
+    </div>
+
+
+    <script>
+
+        let id=new URLSearchParams(window.location.search).get('id')
+        fetch('https://api.npoint.io/'+id)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('previewAbout').textContent = data.aboutMe;
+                document.getElementById('previewFirstName').textContent = data.firstName;
+                document.getElementById('previewLastName').textContent = data.lastName;
+                //document.getElementById('previewDOB').textContent = dateWithFullMonthName;
+                document.getElementById('previewGender').textContent = data.gender;
+                document.getElementById('previewEmail').textContent = data.email;
+
+                const skillsContainer = document.getElementById('previewSkills');
+                data.skills.forEach(skill => {
+                    const skillElement = document.createElement('div');
+                   
+                    skillElement.textContent = `${skill.language}: Level ${skill.level}`;
+                    skillsContainer.appendChild(skillElement);
+                });
+
+                const addressContainer = document.getElementById('previewAddress');
+                data.address.forEach(address => {
+                    const addressElement = document.createElement('span');
+                  
+                    addressElement.innerHTML = `<br>
+                         ${address.street}
+                        , ${address.locality}
+                        , ${address.pinCode}
+                        , ${address.PhoneNo}`;
+                    addressContainer.appendChild(addressElement);
+                });
+                const educationContainer = document.getElementById('educationData');
+
+                data.education.forEach(education => {
+                    const row = educationContainer.insertRow();
+                    const schoolNameCell = row.insertCell(0);
+                    const degreeCell = row.insertCell(1);
+                    const percentageMarksCell = row.insertCell(2);
+                    const passoutYearCell = row.insertCell(3);
+                
+                    schoolNameCell.textContent = education.schoolName;
+                    degreeCell.textContent = education.degree;
+                    percentageMarksCell.textContent = `${education.percentageMarks}%`;
+                    passoutYearCell.textContent = education.passoutYear;
+                });
+                
+                function pad(n) {
+                    return n < 10 ? '0' + n : n;
+                }
+                let dateOfBirth = new Date();
+                var date = dateOfBirth.getDate();
+                var month = dateOfBirth.getMonth();
+                var year = dateOfBirth.getFullYear();
+                var monthNames = [
+                    "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+                ];
+    
+                var dateWithFullMonthName =  pad(date)+ " " +monthNames[month] + ", " + year;
+               document.getElementById('previewDOB').textContent = dateWithFullMonthName;
+            })
+            .catch(error => console.log(error));
+
+    </script>
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: Calibri, Helvetica, sans-serif;
+            background-image: url("img3.jpg");
+            background-size: cover;
+            color: black;
+        }
+
+        .container {
+            border-top-right-radius: 40%;
+            margin-left: 100px;
+            margin-right: 100px;
+            padding: 50px;
+            background-color: rgba(255, 255, 255, 0.877);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        hr {
+            border: 2px solid black;
+            margin-bottom: 25px;
+            width: 90%;
+        }
+
+        .preview-data {
+            padding: 10px;
+        }
+
+        .additional-education {
+            margin-top: 10px;
+        }
+
+        .additional-address {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Preview of Input Data</h1>
+        <hr>
+        <div class="preview-data">
+            <strong>About me:</strong>
+            <span id="previewAbout"></span>
+        </div>
+        <div class="preview-data">
+            <strong>First Name:</strong>
+            <span id="previewFirstName"></span>
+        </div>
+        <div class="preview-data">
+            <strong>Last Name:</strong>
+            <span id="previewLastName"></span>
+        </div>
+        <div class="preview-data">
+            <strong>Date of Birth:</strong>
+            <span id="previewDOB"></span>
+        </div>
+        <div class="preview-data">
+            <strong>Skills:</strong>
+            <div id="skills-container">
+                <!-- Skills will be displayed here 
+            </div>
+            
+        </div>
+
+        <div class="preview-data">
+            <strong>Gender:</strong>
+            <span id="previewGender"></span>
+        </div>
+        <div class="preview-data">
+            <strong>Phone:</strong>
+            <span id="previewPhone"></span>
+        </div>
+        <div class="preview-data">
+            <strong>Residential Address:</strong>
+            <span id="previewAddress"></span>
+            <span id="previewAddress1"></span>
+            <span id="previewAddress2"></span>
+            <span id="previewAddress3"></span>
+            <div>
+                <h4>Second Address:</h4>
+                <span class="additional-address" id="previewAddress4"></span>
+                <span class="additional-address" id="previewAddress5"></span>
+                <span class="additional-address" id="previewAddress6"></span>
+                <span class="additional-address" id="previewAddress7"></span>
+            </div>
+        </div>
+        <div class="preview-data">
+            <strong>Email:</strong>
+            <span id="previewEmail"></span>
+        </div>
+        <div class="preview-data">
+            <strong>Education:</strong>
+            <span id="previewEducation1"></span>
+            <span id="previewEducation2"></span>
+            <span id="previewEducation3"></span><br>
+            <span class="additional-education" id="previewEducation4"></span>
+            <span class="additional-education" id="previewEducation5"></span>
+            <span class="additional-education" id="previewEducation6"></span>
+            <span class="additional-education" id="previewEducation7"></span>
+        </div>
+    </div>
+
+    <!-- <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Function to set the preview values
+            function setPreviewValues() {
+                const urlParams = new URLSearchParams(window.location.search);
+
+                document.getElementById("previewAbout").textContent = urlParams.get("about");
+                document.getElementById("previewFirstName").textContent = urlParams.get("firstname");
+                document.getElementById("previewLastName").textContent = urlParams.get("lastname");
+                document.getElementById("previewDOB").textContent = urlParams.get("day") + "/ " + urlParams.get("month") + "/ " + urlParams.get("year");
+
+
+
+                document.getElementById("previewGender").textContent = urlParams.get("gender");
+                document.getElementById("previewPhone").textContent = urlParams.get("countrycode");
+                document.getElementById("previewEmail").textContent = urlParams.get("email");
+
+                const addressFields = urlParams.getAll("address[]");
+                const address1Fields = urlParams.getAll("address1[]");
+                const address2Fields = urlParams.getAll("address2[]");
+                const address3Fields = urlParams.getAll("address3[]");
+                const address4Fields = urlParams.getAll("address4[]");
+                const address5Fields = urlParams.getAll("address5[]");
+                const address6Fields = urlParams.getAll("address6[]");
+                const address7Fields = urlParams.getAll("address7[]");
+
+                // Get and display dynamic education and address fields
+                const educationFields = urlParams.getAll("edu1[]");
+                const edu2Fields = urlParams.getAll("edu2[]");
+                const edu3Fields = urlParams.getAll("edu3[]");
+                const edu4Fields = urlParams.getAll("edu4[]"); 
+                const edu5Fields = urlParams.getAll("edu5[]");
+                const edu6Fields = urlParams.getAll("edu6[]");
+                const edu7Fields = urlParams.getAll("edu7[]");
+
+                // Display the first education field
+                document.getElementById("previewEducation1").textContent = educationFields[0];
+                document.getElementById("previewEducation2").textContent = edu2Fields[0];
+                document.getElementById("previewEducation3").textContent = edu3Fields[0];
+
+                
+                for (let i = 1; i < edu4Fields.length; i++) {
+                    const education = document.createElement("span");
+                    education.textContent = edu4Fields[i];
+                    document.getElementById("previewEducation4").appendChild(education);
+                }
+                for (let i = 1; i < edu5Fields.length; i++) {
+                    const education = document.createElement("span");
+                    education.textContent = edu5Fields[i];
+                    document.getElementById("previewEducation5").appendChild(education);
+                }
+                for (let i = 1; i < edu6Fields.length; i++) {
+                    const education = document.createElement("span");
+                    education.textContent = edu6Fields[i];
+                    document.getElementById("previewEducation6").appendChild(education);
+                }
+                for (let i = 1; i < edu7Fields.length; i++) {
+                    const education = document.createElement("span");
+                    education.textContent = edu7Fields[i];
+                    document.getElementById("previewEducation7").appendChild(education);
+                }
+
+                document.getElementById("previewAddress").textContent = addressFields[0];
+                document.getElementById("previewAddress1").textContent = address1Fields[0];
+                document.getElementById("previewAddress2").textContent = address2Fields[0];
+                document.getElementById("previewAddress3").textContent = address3Fields[0];
+
+                for (let i = 1; i < address4Fields.length; i++) {
+                    const address = document.createElement("span");
+                    address.textContent = address4Fields[i];
+                    document.getElementById("previewAddress4").appendChild(address);
+                }
+
+                if (address4Fields.length > 0) {
+                    document.getElementById("previewAddress4").textContent = address4Fields[0];
+                    document.getElementById("previewAddress5").textContent = address5Fields[0];
+                    document.getElementById("previewAddress6").textContent = address6Fields[0];
+                    document.getElementById("previewAddress7").textContent = address7Fields[0];
+                }
+
+                if (edu4Fields.length > 0) {
+                    document.getElementById("previewEducation4").textContent = edu4Fields[0];
+                    document.getElementById("previewEducation5").textContent = edu5Fields[0];
+                    document.getElementById("previewEducation6").textContent = edu6Fields[0];
+                    document.getElementById("previewEducation7").textContent = edu7Fields[0];
+                }
+
+                // Retrieve selected programming languages
+             
+             /**   const selectedLanguages = urlParams.getAll("lang[]");
+               
+                const javaRating = urlParams.get("javaRating");
+                const cSharpRating = urlParams.get("cSharpRating");
+                const cRating = urlParams.get("cRating");
+                const cppRating = urlParams.get("cppRating");
+                const pythonRating = urlParams.get("pythonRating");
+                const jsRating = urlParams.get("jsRating");
+                const kotlinRating = urlParams.get("kotlinRating");
+                const goRating = urlParams.get("goRating");
+
+                document.getElementById("previewJavaRating").textContent = "Java Rating: " + javaRating;
+                document.getElementById("previewC#Rating").textContent = "C# Rating: " + cSharpRating;
+                document.getElementById("previewCRating").textContent = "C Rating: " + cRating;
+                document.getElementById("previewCppRating").textContent = "Cpp Rating: " + cppRating;
+                document.getElementById("previewJavaScriptRating").textContent = "Python Rating: " + pythonRating;
+                document.getElementById("previewPythonRating").textContent = "JS Rating: " + jsRating;
+                document.getElementById("previewKotlinRating").textContent = "Kotlin Rating: " + kotlinRating;
+                document.getElementById("previewGoRating").textContent = "Go Rating: " + goRating;
+
+               **/
+                
+
+
+            }
+
+
+            // Get query parameters from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+
+            setPreviewValues();
+        });
+    </script> 
+</body>
+
+</html> -->

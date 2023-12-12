@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <form id="frm" action="output.html" method="GET">
+        <!-- onsubmit="return false" -->
+        <div class="container ">
+            <center>
+                <h1>Detail Preview Form</h1>
+            </center>
+            <hr>
+            <div style="width: 95%;">
+                <label><b>About me:</b></label>
+                <input type="text" class="text" name="about" placeholder="Enter something about yourself..."
+                    size="55" required/>
+                    <span class="error" id="about-error"></span>
+            </div>
+            <div style="display: flex; justify-content: space-between;" class="field-error">
+                <div style="width: 45%;" >
+                    <label><b>First Name:</b></label>
+                    <input type="text" class="text" name="firstname" id="fname" placeholder="First Name" size="15" />
+                    <span class="error"></span>
+                  
+                </div>
+                <div style="width: 45%;">
+                    <label><b>Last Name:</b></label>
+                    <input type="text" class="text" name="lastname" id="lname" placeholder="Last Name" size="15" />
+                    <span class="error"></span>
+                </div>
+            </div>
+
+            <div>
+                <label><b>Date of Birth:</b></label>
+            
+                <select class="form-select date" id="day" name="day">
+                    <option value="">Day</option>
+                
+                </select>
+            
+                <select class="form-select date" id="month" name="month">
+                    <option value="">Month</option>
+                   
+                </select>
+            
+                <select class="form-select date" id="year" name="year">
+                    <option value="">Year</option>
+                 
+                </select>
+                <br>
+                <span class="error" id="dob-error"></span>
+            </div>
+            
+            <br><br>
+
+            <div>
+                <label for="lang"><b>Programming Languages:</b> </label>
+                <div class="contain">
+                    <div class='element' id='div_1'>
+                        <input type='text' placeholder='Enter your skill' id='txt_1'>
+                        <input type='range' id='level_1' min='0' max='5' step='1'>
+                        <span class='add'>Add Skill</span>
+                        <span class='error'></span> 
+                        
+                    </div>
+                    
+                </div>
+                <br>
+            </div>
+            <!-- <div style="display: flex;flex-wrap:wrap;">
+                <div style="display: inline-block;">
+                    <div class="rating">
+                        <span>Java:</span>
+                        <input type="radio" id="javaStar5" name="javaRating" value="5" />
+                        <label class="star" for="javaStar5" title="Awesome" aria-hidden="true"></label>
+                        <input type="radio" id="javaStar4" name="javaRating" value="4" />
+                        <label class="star" for="javaStar4" title="Great" aria-hidden="true"></label>
+                        <input type="radio" id="javaStar3" name="javaRating" value="3" />
+                        <label class="star" for="javaStar3" title="Very good" aria-hidden="true"></label>
+                        <input type="radio" id="javaStar2" name="javaRating" value="2" />
+                        <label class="star" for="javaStar2" title="Good" aria-hidden="true"></label>
+                        <input type="radio" id="javaStar1" name="javaRating" value="1" />
+                        <label class="star" for="javaStar1" title="Bad" aria-hidden="true"></label>
+                    </div>
+
+                    <br>
+                    <div class="rating">
+                        <span>C#:</span>
+                        <input type="radio" id="C#Star5" name="cSharpRating" value="5" />
+                        <label class="star" for="C#Star5" title="Awesome" aria-hidden="true"></label>
+                        <input type="radio" id="C#Star4" name="cSharpRating" value="4" />
+                        <label class="star" for="C#Star4" title="Great" aria-hidden="true"></label>
+                        <input type="radio" id="C#Star3" name="cSharpRating" value="3" />
+                        <label class="star" for="C#Star3" title="Very good" aria-hidden="true"></label>
+                        <input type="radio" id="C#Star2" name="cSharpRating" value="2" />
+                        <label class="star" for="C#Star2" title="Good" aria-hidden="true"></label>
+                        <input type="radio" id="C#Star1" name="cSharpRating" value="1" />
+                        <label class="star" for="C#Star1" title="Bad" aria-hidden="true"></label>
+                    </div>
+                    <br>
+                    <div class="rating">
+                        <span>C:</span>
+                        <input type="radio" id="CStar5" name="cRating" value="5" />
+                        <label class="star" for="CStar5" title="Awesome" aria-hidden="true"></label>
+                        <input type="radio" id="CStar4" name="cRating" value="4" />
+                        <label class="star" for="CStar4" title="Great" aria-hidden="true"></label>
+                        <input type="radio" id="CStar3" name="cRating" value="3" />
+                        <label class="star" for="CStar3" title="Very good" aria-hidden="true"></label>
+                        <input type="radio" id="CStar2" name="cRating" value="2" />
+                        <label class="star" for="CStar2" title="Good" aria-hidden="true"></label>
+                        <input type="radio" id="CStar1" name="cRating" value="1" />
+                        <label class="star" for="CStar1" title="Bad" aria-hidden="true"></label>
+                    </div>
+                    <br>
+                    <div class="rating">
+                        <span>C++:</span>
+                        <input type="radio" id="CppStar5" name="cppRating" value="5" />
+                        <label class="star" for="CppStar5" title="Awesome" aria-hidden="true"></label>
+                        <input type="radio" id="CppStar4" name="cppRating" value="4" />
+                        <label class="star" for="CppStar4" title="Great" aria-hidden="true"></label>
+                        <input type="radio" id="CppStar3" name="cppRating" value="3" />
+                        <label class="star" for="CppStar3" title="Very good" aria-hidden="true"></label>
+                        <input type="radio" id="CppStar2" name="cppRating" value="2" />
+                        <label class="star" for="CppStar2" title="Good" aria-hidden="true"></label>
+                        <input type="radio" id="CppStar1" name="cppRating" value="1" />
+                        <label class="star" for="CppStar1" title="Bad" aria-hidden="true"></label>
+                    </div>
+                </div>
+                <div style="display: inline-block;margin-left:60px;">
+                    <div class="rating">
+                        <span> Python :</span>
+                        <input type="radio" id="PythonStar5" name="pythonRating" value="5" />
+                        <label class="star" for="PythonStar5" title="Awesome" aria-hidden="true"></label>
+                        <input type="radio" id="PythonStar4" name="pythonRating" value="4" />
+                        <label class="star" for="PythonStar4" title="Great" aria-hidden="true"></label>
+                        <input type="radio" id="PythonStar3" name="pythonRating" value="3" />
+                        <label class="star" for="PythonStar3" title="Very good" aria-hidden="true"></label>
+                        <input type="radio" id="PythonStar2" name="pythonRating" value="2" />
+                        <label class="star" for="PythonStar2" title="Good" aria-hidden="true"></label>
+                        <input type="radio" id="PythonStar1" name="pythonRating" value="1" />
+                        <label class="star" for="PythonStar1" title="Bad" aria-hidden="true"></label>
+                    </div>
+                    <br>
+                    <div class="rating">
+                        <span>JavaScript:</span>
+                        <input type="radio" id="JsStar5" name="jsRating" value="5" />
+                        <label class="star" for="JsStar5" title="Awesome" aria-hidden="true"></label>
+                        <input type="radio" id="JsStar4" name="jsRating" value="4" />
+                        <label class="star" for="JsStar4" title="Great" aria-hidden="true"></label>
+                        <input type="radio" id="JsStar3" name="jsRating" value="3" />
+                        <label class="star" for="JsStar3" title="Very good" aria-hidden="true"></label>
+                        <input type="radio" id="JsStar2" name="jsRating" value="2" />
+                        <label class="star" for="JsStar2" title="Good" aria-hidden="true"></label>
+                        <input type="radio" id="JsStar1" name="jsRating" value="1" />
+                        <label class="star" for="JsStar1" title="Bad" aria-hidden="true"></label>
+                    </div>
+                    <br>
+                    <div class="rating">
+                        <span>Kotlin:</span>
+                        <input type="radio" id="kotStar5" name="kotlinRating" value="5" />
+                        <label class="star" for="kotStar5" title="Awesome" aria-hidden="true"></label>
+                        <input type="radio" id="kotStar4" name="kotlinRating" value="4" />
+                        <label class="star" for="kotStar4" title="Great" aria-hidden="true"></label>
+                        <input type="radio" id="kotStar3" name="kotlinRating" value="3" />
+                        <label class="star" for="kotStar3" title="Very good" aria-hidden="true"></label>
+                        <input type="radio" id="kotStar2" name="kotlinRating" value="2" />
+                        <label class="star" for="kotStar2" title="Good" aria-hidden="true"></label>
+                        <input type="radio" id="kotStar1" name="kotlinRating" value="1" />
+                        <label class="star" for="kotStar1" title="Bad" aria-hidden="true"></label>
+                    </div>
+                    <br>
+                    <div class="rating">
+                        <span>Go:</span>
+                        <input type="radio" id="GoStar5" name="goRating" value="5" />
+                        <label class="star" for="GoStar5" title="Awesome" aria-hidden="true"></label>
+                        <input type="radio" id="GoStar4" name="goRating" value="4" />
+                        <label class="star" for="GoStar4" title="Great" aria-hidden="true"></label>
+                        <input type="radio" id="GoStar3" name="goRating" value="3" />
+                        <label class="star" for="GoStar3" title="Very good" aria-hidden="true"></label>
+                        <input type="radio" id="GoStar2" name="goRating" value="2" />
+                        <label class="star" for="GoStar2" title="Good" aria-hidden="true"></label>
+                        <input type="radio" id="GoStar1" name="goRating" value="1" />
+                        <label class="star" for="GoStar1" title="Bad" aria-hidden="true"></label>
+                    </div>
+
+                </div>
+
+            </div> -->
+
+
+            <div>
+                <label><b>Gender:</b></label><br>
+                <input type="radio" name="gender" class="gender-radio" value="male" id="maleRadio">Male
+                <input type="radio" name="gender" class="gender-radio" value="female" id="femaleRadio">Female
+                <input type="radio" name="gender" class="gender-radio" value="other" id="otherRadio">Other
+                
+
+<div id="genderError" class="error-message" style="color: firebrick; display: none;"></div>
+
+            </div>
+
+           
+                <div style="width: 45%;">
+                    <label><b>Email:</b></label>
+                    <input type="email" id="email" placeholder="Enter Email here" name="email">
+                    <span class="error"></span>
+                </div>
+                
+           
+            <label><b>Address:</b></label>
+            <div id="addressFields">
+                <div class="address-row">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="width: 45%;">
+                            <input type="text" class="text" id="address" placeholder="Enter Address" name="address[]">
+                            <span class="error"></span>
+                        </div>
+                        <div style="width: 45%;">
+                            <input type="text" class="text" id="locality" placeholder="Enter Locality" name="address1[]">
+                            <span class="error"></span>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="width: 45%;">
+                            <input type="text" class="text" id="pincode" placeholder="Enter Pin Code" name="address2[]" >
+                            <span class="error"></span>
+                        </div>
+                        <div style="width: 45%;">
+                            <input type="text" class="text" id="countrycode"  placeholder="Enter Phone no." name="address3[]">
+                            <span class="error"></span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <button type="button" id="addAddress" class="btn"> + Add Address</button>
+            <br>
+            <label for="edu" ><b>Education</b></label>
+            <div id="educationFields">
+                <div class="education-row">
+                <div  style="display: flex; justify-content: space-between;">
+                    <div style="width: 45%;">
+                        <input type="text" name="edu1[]" id="schoolName" placeholder="Enter School name" class="text" size="2" />
+                        <span class="error"></span>
+                    </div>
+                    <div style="width: 45%;">
+                        <input type="text" placeholder="Enter Degree" id="degree" name="edu2[]" class="text" min="0" max="100">
+                        <span class="error"></span>
+                    </div>
+                </div>
+                <div  style="display: flex; justify-content: space-between;">
+                    <div style="width: 45%;">
+                        <input type="text" class="text" placeholder="Enter Passout year" name="edu3[]">
+                        <span class="error"></span>
+                    </div>
+                    <div style="width: 45%;">
+                        <input type="text" class="text" placeholder="Enter Percentage/Marks Obtained" name="edu4[]"
+                           >
+                            <span class="error"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <button type="button" id="addEducation" class="btn"> + Add Education</button>
+             <br>
+            <!-- <input type="submit" id="submit"  value="Submit"> -->
+              <!-- Save to JSON Button -->
+        <button id="validateBtn" type="button" class="registerbtn1">Submit</button>
+             <!-- Validation Button -->
+        <!-- <button id="saveToJSONBtn" type="button" class="registerbtn2">Validate</button> -->
+
+      
+
+        </div>
+    </form>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+
+</body>
+
+</html>

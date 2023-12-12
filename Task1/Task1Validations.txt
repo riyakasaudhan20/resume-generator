@@ -1,0 +1,25 @@
+Validation-
+FirstName ,LastName-Same (Can't be empty,Allow characters a-z albhabets,special characters . - allowed only otherwise validation fails)
+
+Email-
+Cant be empty,Proper format with@gmail.com ,No other characters allowed,otherwise fail
+
+DOB-
+Invalid date eg. no 30 Feb,Future date not allowed
+
+Gender-Must be Selected
+
+Address-
+All must be filled
+PinCode-6 Digits
+Contact-10 digits(excluding country code)
+
+Education-
+Passout year -4 Digits(after 2000- till now)
+All must be filled
+
+Language-
+Not Empty
+Percentage inside range
+
+
